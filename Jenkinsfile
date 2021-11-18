@@ -36,7 +36,7 @@ pipeline {
         
         stage('TerraformPlan'){
             steps {
-                dir('.'){
+                dir('./'){
                     script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
@@ -46,6 +46,7 @@ pipeline {
                         sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' --var-file='environments/${environment}.tfvars' \
                         -out terraform.tfplan;echo \$? > status" 
                         stash name: "terraform-plan", includes: "terraform.tfplan"
+                        sh "ls -ltra"
                     }
                 }
             }
@@ -65,6 +66,7 @@ pipeline {
                         dir('./'){
                             unstash "terraform-plan"
                             sh 'terraform apply terraform.tfplan'
+                            sh "ls -ltra"
                         }
                     }
                 }
