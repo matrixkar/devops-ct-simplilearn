@@ -16,7 +16,7 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('./'){
+                dir('.'){
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
@@ -26,7 +26,7 @@ pipeline {
 
         stage('TerraformValidate'){
             steps {
-                dir('./'){
+                dir('.'){
                     sh "terraform validate"
                 }
             }
@@ -34,7 +34,7 @@ pipeline {
         
         stage('TerraformPlan'){
             steps {
-                dir('./'){
+                dir('.'){
                     script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
