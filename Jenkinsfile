@@ -16,7 +16,7 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('jenkins/terraform-pipeline/ec2-tfvars/'){
+                dir('./'){
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
@@ -26,7 +26,7 @@ pipeline {
 
         stage('TerraformValidate'){
             steps {
-                dir('jenkins/terraform-pipeline/ec2-tfvars/'){
+                dir('./'){
                     sh "terraform validate"
                 }
             }
@@ -34,7 +34,7 @@ pipeline {
         
         stage('TerraformPlan'){
             steps {
-                dir('jenkins/terraform-pipeline/ec2-tfvars/'){
+                dir('./'){
                     script {
                         try {
                             sh "terraform workspace new ${params.WORKSPACE}"
@@ -60,7 +60,7 @@ pipeline {
                          currentBuild.result = 'UNSTABLE'
                     }
                     if(apply){
-                        dir('jenkins/terraform-pipeline/ec2-tfvars/'){
+                        dir('./'){
                             unstash "terraform-plan"
                             sh 'terraform apply terraform.tfplan'
                         }
