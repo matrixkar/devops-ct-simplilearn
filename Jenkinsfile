@@ -27,8 +27,9 @@ pipeline {
 
         stage('TerraformValidate'){
             steps {
-                dir('.'){
+                dir('./'){
                     sh "terraform validate"
+                    sh "ls -ltra"
                 }
             }
         }
