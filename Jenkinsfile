@@ -16,10 +16,11 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('.'){
+                dir('./'){
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
+                    sh "ls -ltra"
                 }
             }
         }
